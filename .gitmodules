@@ -1,0 +1,4 @@
+[submodule "public"]
+	path = public
+	url = https://github.com/maiera/gde-app.git
+	branch = feature/material_design
