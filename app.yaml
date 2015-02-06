@@ -1,4 +1,4 @@
-version: 2
+version: 3
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -16,7 +16,9 @@ handlers:
 - url: /(.+)
   static_files: public/\1
   upload: public/(.*)
+  secure: always
 
 - url: /
   static_files: public/index.html
   upload: public/index.html
+  secure: always
