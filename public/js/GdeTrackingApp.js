@@ -27,8 +27,8 @@ google.load(
 function onGapiClientLoad(){
   //Get the RootScope
   var rootScope = angular.element(document.body).scope();
-  //var ROOT = 'https://elite-firefly-737.appspot.com/_ah/api';
-  var ROOT = 'https://omega-keep-406.appspot.com/_ah/api';
+  var ROOT = 'https://elite-firefly-737.appspot.com/_ah/api';
+  //var ROOT = 'https://omega-keep-406.appspot.com/_ah/api';
       gapi.client.load('gdetracking', 'v1.0b2', function() {
         rootScope.is_backend_ready=true;
         console.log('GdeApp Backend API LOADED!');
@@ -44,7 +44,7 @@ function onGapiClientLoad(){
 // =====================================================================================================
 function toggleDialog(id)
 {
-	var dialog = document.querySelector('paper-dialog[id=' + id + ']');
+	var dialog = document.querySelector('[id=' + id + ']');
 	dialog.toggle();
 }
 document.addEventListener('polymer-ready', function()
