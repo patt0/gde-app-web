@@ -244,6 +244,7 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
           'maxLines'	:3
         }
       });
+      BarChart.setView({'columns': [0,1,2,3]});//Show only the log10 columns
 
       realChart=BarChart;
 		}
