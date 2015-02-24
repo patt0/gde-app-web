@@ -27,8 +27,8 @@ google.load(
 function onGapiClientLoad(){
   //Get the RootScope
   var rootScope = angular.element(document.body).scope();
-  //var ROOT = 'https://elite-firefly-737.appspot.com/_ah/api';
-  var ROOT = 'https://omega-keep-406.appspot.com/_ah/api';
+  var ROOT = 'https://elite-firefly-737.appspot.com/_ah/api';
+  //var ROOT = 'https://omega-keep-406.appspot.com/_ah/api';
       gapi.client.load('gdetracking', 'v1.0b2', function() {
         rootScope.is_backend_ready=true;
         console.log('GdeApp Backend API LOADED!');
@@ -44,7 +44,7 @@ function onGapiClientLoad(){
 // =====================================================================================================
 function toggleDialog(id)
 {
-	var dialog = document.querySelector('paper-dialog[id=' + id + ']');
+	var dialog = document.querySelector('[id=' + id + ']');
 	dialog.toggle();
 }
 document.addEventListener('polymer-ready', function()
@@ -267,8 +267,8 @@ GdeTrackingApp.run(function ($rootScope)
 		},
 		'updateStats'				: function(dataset,	apiData)
 		{
-		  dataset.social_impact_raw	= (dataset.social_impact_raw	|| 0) + parseInt(apiData.social_impact	|| 0, 10);
-			dataset.meta_impact_raw	= (dataset.meta_impact_raw	|| 0) + parseInt(apiData.meta_impact	|| 0, 10);
+		  dataset.social_impact_raw	= parseInt(dataset.social_impact	|| 0) + parseInt(apiData.social_impact	|| 0, 10);
+			dataset.meta_impact_raw	= parseInt(dataset.meta_impact	|| 0) + parseInt(apiData.meta_impact	|| 0, 10);
 			dataset.social_impact	= parseFloat(parseFloat(dataset.social_impact	|| 0.00) + log10(parseFloat(apiData.social_impact	|| 0.00, 10))).toFixed(2);
 			dataset.meta_impact	= parseFloat(parseFloat(dataset.meta_impact	|| 0.00) + log10(parseFloat(apiData.meta_impact	|| 0.00, 10))).toFixed(2);
 			dataset.total_impact	= parseFloat((parseFloat(dataset.total_impact		|| 0.00) + parseFloat(apiData.total_impact	|| 0)).toFixed(2));
