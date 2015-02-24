@@ -250,16 +250,19 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 		}
 
 		//Display the Charts
-		new google.visualization.Dashboard(document.getElementById('generalStatisticsBy'+prefix))
-        .bind([keySelector,activitiesSlider,socialImpactSlider,metaImpactSlider,impactSlider],
-              [TableChart,realChart])
-        .draw(activitiesBy_data);
+		var dashboard = new google.visualization.Dashboard(document.getElementById('generalStatisticsBy'+prefix));
+
+		dashboard.bind( [keySelector,activitiesSlider,socialImpactSlider,metaImpactSlider,impactSlider],
+                    TableChart);
+    dashboard.bind( [keySelector,activitiesSlider,socialImpactSlider,metaImpactSlider,impactSlider],
+                    realChart);
+
+    dashboard.draw(activitiesBy_data);
 
 	}
 
 	var drawGeneralStatistics		= function ()
 	{
-    //console.log('drawGeneralStatistics initiated');
 		//===============================================//
 		// For every Activity in $scope.top100activities
 		//===============================================//
