@@ -230,10 +230,11 @@ select:hover
 	color				: #616161;
 	text-shadow			: 0 0 0.5px #616161;
 }
-.googleDevelopersLogo	{
-	position			: relative;
-	top					: 80px;
-	height				: 200px;
+.googleDevelopersLogo {
+  position: relative;
+  top: 35px;
+  height: 150px;
+  left: 35px;
 }
 html /deep/ .content	{
 	padding				: 20px;
@@ -589,6 +590,9 @@ html /deep/ .prettyTable th
   .appLogo{
     display:none;
   }
+  .hideForSmallScreen{
+    display:none;
+  }
 }
 
 @media (max-height: 500px) {
@@ -600,13 +604,36 @@ html /deep/ .prettyTable th
   }
   .googleDevelopersLogo {
     position: relative;
-    top: 34px;
-    height: 134px;
+    top: 5px;
+    height: 50px;
   }
   .countryButtons	paper-button {
     width: 10em;
   }
   .appLogo{
     display:none;
+  }
+  .plusLogin{
+    position: relative;
+    top:10px;
+  }
+  .plusLogin	#userImg img {
+    height: 50px;
+    box-shadow: 2px 2px 10px #000;
+  }
+  core-toolbar.medium-tall{
+    height:auto;
+  }
+  .hideForSmallScreen{
+    display:none;
+  }
+}
+@media (max-width: 1050px) {
+  .hideForSmallScreen{
+    display:none;
+  }
+  html /deep/ .prettyTable {
+    margin: 1em;
+    padding:initial;
   }
 }
