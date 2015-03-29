@@ -31,15 +31,14 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
   	  'Region':{},
   	};
 
-	}
+	};
 
 	$scope.initChartArrays();
 
 	// ------------------------------------
 	//		Date Range Filter
 	// ------------------------------------
-	$scope.dateFilter				= function ()
-	{
+	$scope.dateFilter				= function (){
 		if ( $scope.monthSelected && $scope.yearSelected )
 		{
 			// ------------------------------------
@@ -58,11 +57,10 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 			  var minDate		= $scope.yearSince +'-'+ ($scope.monthSince<10?"0":"")+$scope.monthSince; //Format date into YYYY/MM
 			  $scope.getactivitiesFromGAE(null,null,minDate,null,null,$scope.includeDeleted);	// Get the activities
 			}
-		};
+		}
 	};
 	// ------------------------------------
-  $scope.productFilter				= function ()
-	{
+  $scope.productFilter				= function (){
 	  // ------------------------------------
 		//		Reset local data
 		// ------------------------------------
@@ -76,7 +74,7 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 			loadingToast.show();
 			$('.forGooglers')	.css('display','block');
 		  $scope.getactivitiesFromGAE(null,null,null,null,null,$scope.includeDeleted);	// Get the activities
-		};
+		}
 	};
 
 	var drawChart = function(prefix,key){
@@ -119,7 +117,7 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 			activitiesBy.rows.push(
 				$scope.utils.chartDataRow(activitiesClone[i][key], activitiesClone[i],useCountry)
 			);
-		};
+		}
 
 		//Get the DataVisualization object
 		var activitiesBy_data = new google.visualization.DataTable(activitiesBy);
@@ -190,7 +188,7 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 			}
 		});
 
-		var chartWidth		= $("#generalStatisticsBy"+prefix).width()-10;
+		var chartWidth		= $("#generalStatisticsBy"+prefix).width()-20;
 
 		//Create the table
 		var TableChart = new google.visualization.ChartWrapper();
@@ -281,7 +279,7 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 
     dashboard.draw(activitiesBy_data);
 
-	}
+	};
 
 	var drawGeneralStatistics		= function ()
 	{
@@ -304,7 +302,7 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 			top100.rows.push(
 				$scope.utils.chartDataRow($scope.top100activities[i].title, $scope.top100activities[i])
 			);
-		};
+		}
 
 		var top100activitiesByGde_data		= new google.visualization.DataTable(top100);
 		top100activitiesByGde_data.sort(1);
@@ -340,7 +338,7 @@ GdeTrackingApp.controller("generalStatisticsForGooglersCtrl",	function($rootScop
 		drawChart('Region','region');
 
 		loadingToast.dismiss();
-	}
+	};
 
 	var loadingToast	= document.querySelector('paper-toast[id="loading"]');	// Called to show loading sign
 	$scope.loadVisualizationLibraries = google.load('visualization', '1.1', null);
