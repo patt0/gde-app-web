@@ -460,7 +460,7 @@ GdeTrackingApp.controller("myStatisticsCtrl",					function($scope,	$location,	$h
     toggleDialog('delTrashDialog');
   }
 
-  $scope.trashGDEActivity = function(){
+  $scope.trashGDEActivity = function(senderEvent){
     var activityId = $scope.delTrashActId;
 
     //Remove the AR from the backend
@@ -471,7 +471,7 @@ GdeTrackingApp.controller("myStatisticsCtrl",					function($scope,	$location,	$h
 
           alert(resp.message);
         }else{
-          toggleDialog('delTrashDialog');
+          senderEvent.target.closest('#delTrashDialog').toggle();
 
           //Get the item
           var item = $.grep($scope.data.items, function(item){
@@ -492,7 +492,7 @@ GdeTrackingApp.controller("myStatisticsCtrl",					function($scope,	$location,	$h
     });
   }
 
-  $scope.deleteGDEActivity = function(){
+  $scope.deleteGDEActivity = function(senderEvent){
     var activityId = $scope.delTrashActId;
 
     //Remove the AR from the backend
@@ -503,7 +503,7 @@ GdeTrackingApp.controller("myStatisticsCtrl",					function($scope,	$location,	$h
 
           alert(resp.message);
         }else{
-          toggleDialog('delTrashDialog');
+          senderEvent.target.closest('#delTrashDialog').toggle();
           //AR Deleted, remove from the table
           removeARfromList(resp.id);
 
@@ -699,63 +699,70 @@ GdeTrackingApp.controller("myStatisticsCtrl",					function($scope,	$location,	$h
     }
 
     //Validate numeric Fields
-    if ($.isNumeric($scope.currentActivity.plus_oners)){
-      //Sanity Checks on Numbers
-      if ($scope.currentActivity.plus_oners==null || $scope.currentActivity.plus_oners==""){
-        $scope.currentActivity.plus_oners=0;
-      }
-      $scope.currentActivity.plus_oners=parseInt($scope.currentActivity.plus_oners);
+    //Sanity Checks on Numbers
+    if ($scope.currentActivity.plus_oners==null || $scope.currentActivity.plus_oners==""){
+      $scope.currentActivity.plus_oners=0;
     }else{
-      alert('Invalid +1s, please use insert an integer number');
-      readyToSave=false;
+      if ($.isNumeric($scope.currentActivity.plus_oners)){
+        $scope.currentActivity.plus_oners=parseInt($scope.currentActivity.plus_oners);
+      }else{
+        alert('Invalid +1s, please use an integer number');
+        readyToSave=false;
+      }
     }
 
-    if ($.isNumeric($scope.currentActivity.resharers)){
-      //Sanity Checks on Numbers
-      if ($scope.currentActivity.resharers==null || $scope.currentActivity.resharers==""){
-        $scope.currentActivity.resharers=0;
-      }
-      $scope.currentActivity.resharers=parseInt($scope.currentActivity.resharers);
+    //Sanity Checks on Numbers
+    if ($scope.currentActivity.resharers==null || $scope.currentActivity.resharers==""){
+      $scope.currentActivity.resharers=0;
     }else{
-      alert('Invalid Resharers, please use insert an integer number');
-      readyToSave=false;
+      if ($.isNumeric($scope.currentActivity.resharers)){
+        $scope.currentActivity.resharers=parseInt($scope.currentActivity.resharers);
+      }else{
+        alert('Invalid Resharers, please use an integer number');
+        readyToSave=false;
+      }
     }
-
-    if ($.isNumeric($scope.currentActivity.comments)){
-      //Sanity Checks on Numbers
-      if ($scope.currentActivity.comments==null || $scope.currentActivity.comments==""){
-        $scope.currentActivity.comments=0;
-      }
-      $scope.currentActivity.comments=parseInt($scope.currentActivity.comments);
+    
+    //Sanity Checks on Numbers
+    if ($scope.currentActivity.comments==null || $scope.currentActivity.comments==""){
+      $scope.currentActivity.comments=0;
     }else{
-      alert('Invalid Comments, please use insert an integer number');
-      readyToSave=false;
+      if ($.isNumeric($scope.currentActivity.comments)){
+       
+        
+        $scope.currentActivity.comments=parseInt($scope.currentActivity.comments);
+      }else{
+        alert('Invalid Comments, please use an integer number');
+        readyToSave=false;
+      }
     }
 
     $scope.metadataArray.forEach(function(currMeta){
       if ($scope.getAGFieldTitle(currMeta.activity_group,'impact').length>0){
-        if ($.isNumeric(currMeta.impact)){
-          //Sanity Checks on Numbers
-          if (currMeta.impact==null || currMeta.impact==""){
-            currMeta.impact=0;
-          }
-          currMeta.impact=parseInt(currMeta.impact);
+        //Sanity Checks on Numbers
+        if (currMeta.impact==null || currMeta.impact==""){
+          currMeta.impact=0;
         }else{
-          alert('Invalid impact, please use insert an integer number');
-          readyToSave=false;
+          if ($.isNumeric(currMeta.impact)){
+            currMeta.impact=parseInt(currMeta.impact);
+          }else{
+            alert('Invalid impact, please use an integer number');
+            readyToSave=false;
+          }
         }
       }
 
       if($scope.getAGFieldTitle(currMeta.activity_group,'us_approx_amount').length>0){
-        if ($.isNumeric(currMeta.us_approx_amount)){
-          //Sanity Checks on Numbers
-          if (currMeta.us_approx_amount==null || currMeta.us_approx_amount==""){
-            currMeta.us_approx_amount=0;
-          }
-          currMeta.us_approx_amount=parseFloat(currMeta.us_approx_amount);
+        //Sanity Checks on Numbers
+        if (currMeta.us_approx_amount==null || currMeta.us_approx_amount==""){
+          currMeta.us_approx_amount=null;
         }else{
-          alert('Invalid us_approx_amount, please use insert numeric characters');
-          readyToSave=false;
+          if ($.isNumeric(currMeta.us_approx_amount)){
+            currMeta.us_approx_amount=parseFloat(currMeta.us_approx_amount);
+          }else{
+            alert('Invalid us_approx_amount, please use numeric characters');
+            readyToSave=false;
+          }
         }
       }
     });
@@ -1051,14 +1058,16 @@ GdeTrackingApp.controller("myStatisticsCtrl",					function($scope,	$location,	$h
 
   };
   //Metadata functions
-  $scope.selectAG = function(agId){
+  $scope.selectAG = function(agId,senderEvent){
     $.each($scope.currActivityGroups, function(k,v)
     {
       var ag = $scope.currActivityGroups[k];
       if(agId==ag.tag){
         $scope.selectAGIdx=k;
         $scope.selectedAG=ag;
-        $("#core_animated_pages").prop('selected',k);
+        //MSO - 2015-03-29 - get the reference to the core animated pages inside the context of the dialog
+        var pages= senderEvent.target.parentElement.parentElement.querySelector("#core_animated_pages");
+        pages.selected = k;//Select the right page for the tab
       }
 		});
   };
